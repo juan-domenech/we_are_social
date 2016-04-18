@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'paypal.standard.ipn',
     'magazines',
     'debug_toolbar',
+    'tinymce',
+    'emoticons',
+    'threads',
 ]
 
 
@@ -150,6 +153,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = ''
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
@@ -171,3 +176,6 @@ AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',
                            'accounts.backends.EmailAuth',)
 LOGIN_URL = '/login/'
+
+TINYMCE_JS_ROOT = os.path.join(BASE_DIR, "static", 'js', 'tinymce', 'tinymce.min.js')
+

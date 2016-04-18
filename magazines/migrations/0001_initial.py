@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
             name='Purchase',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('subscription_end', models.DateTimeField(default=datetime.datetime(2016, 2, 25, 11, 50, 8, 781000, tzinfo=utc))),
+                ('subscription_end', models.DateTimeField(default=datetime.datetime(2016, 4, 18, 13, 26, 52, 607309, tzinfo=utc))),
                 ('magazine', models.ForeignKey(to='magazines.Magazine')),
                 ('user', models.ForeignKey(related_name='purchases', to=settings.AUTH_USER_MODEL)),
             ],

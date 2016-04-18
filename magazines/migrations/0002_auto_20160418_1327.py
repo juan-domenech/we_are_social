@@ -16,6 +16,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='purchase',
             name='subscription_end',
-            field=models.DateTimeField(default=datetime.datetime(2016, 3, 4, 16, 33, 21, 910000, tzinfo=utc)),
+            field=models.DateTimeField(default=datetime.datetime(2016, 4, 18, 13, 27, 4, 657351, tzinfo=utc)),
         ),
     ]
