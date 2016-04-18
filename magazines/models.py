@@ -3,6 +3,7 @@ from django.conf import settings
 from django.utils import timezone
 
 
+
 class Magazine(models.Model):
 
     name = models.CharField(max_length=254, default='')
