@@ -128,7 +128,7 @@ CREATE TABLE `auth_permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `content_type_id` (`content_type_id`,`codename`),
   CONSTRAINT `auth__content_type_id_508cf46651277a81_fk_django_content_type_id` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +152,7 @@ CREATE TABLE `django_admin_log` (
   KEY `django_admin_log_user_id_52fdd58701c5f563_fk_accounts_user_id` (`user_id`),
   CONSTRAINT `djang_content_type_id_697914295151027a_fk_django_content_type_id` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   CONSTRAINT `django_admin_log_user_id_52fdd58701c5f563_fk_accounts_user_id` FOREIGN KEY (`user_id`) REFERENCES `accounts_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,7 +168,7 @@ CREATE TABLE `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_45f3b1d93ec8c61c_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -223,7 +223,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -419,6 +419,62 @@ CREATE TABLE `paypal_ipn` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `polls_poll`
+--
+
+DROP TABLE IF EXISTS `polls_poll`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `polls_poll` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `question` longtext NOT NULL,
+  `thread_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `thread_id` (`thread_id`),
+  CONSTRAINT `polls_poll_thread_id_44b2423ba716ba48_fk_threads_thread_id` FOREIGN KEY (`thread_id`) REFERENCES `threads_thread` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `polls_pollsubject`
+--
+
+DROP TABLE IF EXISTS `polls_pollsubject`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `polls_pollsubject` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `poll_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `polls_pollsubject_poll_id_733553e3a62af2c6_fk_polls_poll_id` (`poll_id`),
+  CONSTRAINT `polls_pollsubject_poll_id_733553e3a62af2c6_fk_polls_poll_id` FOREIGN KEY (`poll_id`) REFERENCES `polls_poll` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `polls_vote`
+--
+
+DROP TABLE IF EXISTS `polls_vote`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `polls_vote` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `poll_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `polls_vote_poll_id_698d7fc6f38e2c4e_fk_polls_poll_id` (`poll_id`),
+  KEY `polls_vote_subject_id_660023baa1ee1a6_fk_polls_pollsubject_id` (`subject_id`),
+  KEY `polls_vote_user_id_560611c352e5a5a0_fk_accounts_user_id` (`user_id`),
+  CONSTRAINT `polls_vote_poll_id_698d7fc6f38e2c4e_fk_polls_poll_id` FOREIGN KEY (`poll_id`) REFERENCES `polls_poll` (`id`),
+  CONSTRAINT `polls_vote_subject_id_660023baa1ee1a6_fk_polls_pollsubject_id` FOREIGN KEY (`subject_id`) REFERENCES `polls_pollsubject` (`id`),
+  CONSTRAINT `polls_vote_user_id_560611c352e5a5a0_fk_accounts_user_id` FOREIGN KEY (`user_id`) REFERENCES `accounts_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `products_product`
 --
 
@@ -475,7 +531,7 @@ CREATE TABLE `threads_post` (
   KEY `threads_post_e8701ad4` (`user_id`),
   CONSTRAINT `threads_post_thread_id_3a8d2161e2d318d0_fk_threads_thread_id` FOREIGN KEY (`thread_id`) REFERENCES `threads_thread` (`id`),
   CONSTRAINT `threads_post_user_id_6b65af8f19885189_fk_accounts_user_id` FOREIGN KEY (`user_id`) REFERENCES `accounts_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -490,7 +546,7 @@ CREATE TABLE `threads_subject` (
   `name` varchar(255) NOT NULL,
   `description` longtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -511,7 +567,7 @@ CREATE TABLE `threads_thread` (
   KEY `threads_thread_user_id_56c6128cce3bc3c3_fk_accounts_user_id` (`user_id`),
   CONSTRAINT `threads_thread_subject_id_51bdbb0a80e40709_fk_threads_subject_id` FOREIGN KEY (`subject_id`) REFERENCES `threads_subject` (`id`),
   CONSTRAINT `threads_thread_user_id_56c6128cce3bc3c3_fk_accounts_user_id` FOREIGN KEY (`user_id`) REFERENCES `accounts_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -523,4 +579,4 @@ CREATE TABLE `threads_thread` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-18 14:34:37
+-- Dump completed on 2016-04-19 12:43:26
